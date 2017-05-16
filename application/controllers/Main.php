@@ -4,7 +4,26 @@ class Main extends CI_Controller{
         parent::__construct();
     }
     function index(){
-        echo "hey";
+        $this->resetarray();
+        $this->load->view("main");
+    }
+    function savearray($arr){
+        $sess = $_SESSION['remain'] = $arr;
+    }
+    function getarray(){
+        if(isset($_SESSION['remain']))
+        {return $_SESSION['remain'];}
+        else
+        {
+            $this->load->model("data");
+            $alldata = $this->data->numbers();
+            $_SESSION["remain"] = $alldata;            
+            return $_SESSION["remain"];
+        }
+    }
+    function resetarray(){
+        session_start();
+        unset($_SESSION["remain"]);
     }
     function numbers(){
         $this->load->model("data");
@@ -16,6 +35,7 @@ class Main extends CI_Controller{
         }
     }
     function gethiburan(){
+        session_start();
         $this->load->model("data");
         $alldata = $this->data->numbers();
         $arr = array();
@@ -24,20 +44,22 @@ class Main extends CI_Controller{
             $arr[$c] = $alldata[$randomkey]  ;
             unset($alldata[$randomkey]);
         }
-        $data = array("numbers"=>$arr);
+        $this->savearray($alldata);
+        $data = array("numbers"=>$arr,"sesscount"=>count($_SESSION['remain']));
         $this->load->view("hiburan",$data);
     }
     function getutama(){
-        $this->load->model("data");
-        $alldata = $this->data->numbers();
+        session_start();
+        $alldata = $this->getarray();
         $randomkey = array_rand($alldata);
-        $out = $alldata[$randomkey]  ;
-        unset($alldata[$randomkey]);
-        $data = array("number"=>$out);
-        $this->load->view("utama",$data);
-    }    
-    function test(){
-        $this->load->helper("common");
-        echo add_trailing_zero("3");
+        if(count($alldata)>0){
+            $out = $alldata[$randomkey]  ;
+            unset($alldata[$randomkey]);
+            $this->savearray($alldata);
+            $data = array("number"=>$out,"sesscount"=>count($_SESSION['remain']));
+            $this->load->view("utama",$data);
+        }else{
+            $this->load->view("datahabis");
+        }
     }
 }

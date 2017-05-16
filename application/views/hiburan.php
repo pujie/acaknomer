@@ -6,6 +6,7 @@
     padding : 8px;
 }
 </style>
+session = <?php echo $sesscount;?>
 <table id="hiburan">
 <thead><tr><th colspan=16>Nomor</th></tr></thead>
 <tbody>
@@ -22,3 +23,4 @@
 </tbody>
 </table>
 <a href="/main/gethiburan">Reload</a>
+<a href= "/main/getutama">Pemenang Utama</a>
