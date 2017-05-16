@@ -16,6 +16,7 @@ echo $number;
 </tr>
 </tbody>
 </table>
-<a class="button"  href="/main/cetakutama">Cetak</a>
-<a href="/main/getutama">Selanjutnya</a>
-<a href="/main/index">Kembali Ke Halaman Utama</a>
+<script>
+window.print();
+window.location.href = "/main/getutama"
+</script>

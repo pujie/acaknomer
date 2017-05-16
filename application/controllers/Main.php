@@ -45,8 +45,14 @@ class Main extends CI_Controller{
             unset($alldata[$randomkey]);
         }
         $this->savearray($alldata);
+        $_SESSION["numbers"] = $arr;
         $data = array("numbers"=>$arr,"sesscount"=>count($_SESSION['remain']));
         $this->load->view("hiburan",$data);
+    }
+    function cetakhiburan(){
+        session_start();
+        $data = array("numbers"=>$_SESSION["numbers"]);
+        $this->load->view("cetak",$data);
     }
     function getutama(){
         session_start();
@@ -54,6 +60,7 @@ class Main extends CI_Controller{
         $randomkey = array_rand($alldata);
         if(count($alldata)>0){
             $out = $alldata[$randomkey]  ;
+            $_SESSION["utama"] = $out;
             unset($alldata[$randomkey]);
             $this->savearray($alldata);
             $data = array("number"=>$out,"sesscount"=>count($_SESSION['remain']));
@@ -61,5 +68,11 @@ class Main extends CI_Controller{
         }else{
             $this->load->view("datahabis");
         }
+    }
+    function cetakutama(){
+        session_start();
+            $out = $_SESSION["utama"]  ;
+            $data = array("number"=>$out,"sesscount"=>count($_SESSION['remain']));
+            $this->load->view("cetakutama",$data);
     }
 }
