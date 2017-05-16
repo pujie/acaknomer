@@ -18,13 +18,24 @@ class Main extends CI_Controller{
     function gethiburan(){
         $this->load->model("data");
         $alldata = $this->data->numbers();
+        $arr = array();
         for($c=1;$c<=160;$c++){
             $randomkey = array_rand($alldata);
-            echo $c ."=". $alldata[$randomkey]  ;
+            $arr[$c] = $alldata[$randomkey]  ;
             unset($alldata[$randomkey]);
-            echo "  (count ".count($alldata). ") , key = " . $randomkey . "<br />";
         }
+        $data = array("numbers"=>$arr);
+        $this->load->view("hiburan",$data);
     }
+    function getutama(){
+        $this->load->model("data");
+        $alldata = $this->data->numbers();
+        $randomkey = array_rand($alldata);
+        $out = $alldata[$randomkey]  ;
+        unset($alldata[$randomkey]);
+        $data = array("number"=>$out);
+        $this->load->view("utama",$data);
+    }    
     function test(){
         $this->load->helper("common");
         echo add_trailing_zero("3");
