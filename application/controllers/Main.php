@@ -20,8 +20,6 @@ class Main extends CI_Controller{
         $alldata = $this->data->numbers();
         for($c=1;$c<=160;$c++){
             $randomkey = array_rand($alldata);
-            //$key = array_search($randomkey,$alldata);
-            //array_splice($alldata,$randomkey,1);
             echo $c ."=". $alldata[$randomkey]  ;
             unset($alldata[$randomkey]);
             echo "  (count ".count($alldata). ") , key = " . $randomkey . "<br />";
